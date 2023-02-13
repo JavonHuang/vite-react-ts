@@ -1,0 +1,23 @@
+{
+  "name": "vite-react-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JavonHuang/vite-react-ts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JavonHuang/vite-react-ts/issues"
+  },
+  "homepage": "https://github.com/JavonHuang/vite-react-ts#readme",
+  "dependencies": {
+    "vite": "^4.1.1"
+  }
+}
