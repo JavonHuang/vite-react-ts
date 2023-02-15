@@ -1,13 +1,14 @@
 import  { useState } from 'react'
+import   styles  from "@/app.module.scss";
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
+    <div className={styles.test}>
       
       <h1>Vite + React</h1>
-      <div className="card">
+      <div className={styles.box}>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
