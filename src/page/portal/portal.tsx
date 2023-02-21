@@ -1,12 +1,16 @@
-import React, { useEffect,useState} from 'react'
+import React, { useEffect,memo,useState} from 'react'
 import { Outlet } from 'react-router-dom'
 import "./portal.scss";
 import LeftMenu from './leftMenu';
-function Portal() {
+import { useAppDispatch } from '@/hooks/useReduxHook';
+import {useMount  } from "@/hooks/useMount";
+import { GetRouter } from '@/store/slice/system'
+const Portal=()=> {
+  const dispatch = useAppDispatch()
   // let [count, setCount] = useState(0)
 
-  // useEffect(() => { 
-  //   console.log("Portal")
+  // useMount(() => { 
+  //   dispatch(GetRouter())
   // });
 
   return <div className="portal">
@@ -24,4 +28,4 @@ function Portal() {
    </div>
   </div>
 }
-export default Portal
+export default memo(Portal);

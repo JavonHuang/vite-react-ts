@@ -1,6 +1,7 @@
 // vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react'
+import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import { resolve } from 'path'
 
 
@@ -28,5 +29,7 @@ export default defineConfig({
       }
     }
   },
-  plugins: [react()],
+  plugins: [
+    react()
+  ],
 })

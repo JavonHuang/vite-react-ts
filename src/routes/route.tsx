@@ -1,13 +1,15 @@
-import { createHashRouter,useRouteError,redirect} from "react-router-dom";
-import { Suspense, lazy } from 'react'
+import { createHashRouter,useRouteError,redirect,RouterProvider} from "react-router-dom";
+import { Suspense, lazy,memo, useState, useEffect } from 'react'
+import { post } from "@/request/index";
 import React from "react";
 import KeepAlive from 'react-activation'
+import { useAppSelector,useAppDispatch } from '@/hooks/useReduxHook';
+import { GetRouter } from '@/store/slice/system'
 
 type IRouterBeforeLoad = (res:any, redirectUrl: string) => Boolean;
 let routerLoader: IRouterBeforeLoad;
 let _redirectUrl: string = "/";
-let modules = import.meta.glob("@/page/**/**.tsx");
-console.log(modules)
+
 const routes = [
   {
     path: '/',
@@ -35,10 +37,10 @@ const routes = [
       //   name:"NotFound",
       //   component:lazy(() => import('@/page/error/NotFound'))
       // },
-      // { 
-      //   path: '*',
-      //   component:lazy(() => import('../page/error/NotFound'))
-      // },
+      { 
+        path: '*',
+        component:lazy(() => import('../page/error/NotFound'))
+      },
     ]
   },
   { 
@@ -90,5 +92,33 @@ const RouterLoader = (fun: IRouterBeforeLoad) => {
   routerLoader = fun;
 }
 
-const Router  = ()=>createHashRouter(generateRouter([...routes]))
+const Router = memo(() => { 
+  let [myRouter, setMyRouter] = useState(createHashRouter(generateRouter([...routes])));
+  const routerList = useAppSelector((state) => state.system.routerList)
+  const dispatch = useAppDispatch()
+  useEffect(() => { 
+    init()
+  }, [routerList])
+  const init = async () => { 
+    let modules = import.meta.glob("@/page/**/**.tsx");
+    console.log(modules)
+    
+    let portalChildren:any = [];
+    Object.keys(modules).map((key, item) => {
+      let index = routerList.findIndex((r: any) => r.url == key);
+      if (index>-1) { 
+        portalChildren.push({
+          path: key.replace('.tsx','').replace('/src/page','/Portal'),
+          auth: false,
+          name:key.replace('.tsx','').replace('/src/page',''),
+          component:lazy((modules[key] as any))
+        });
+      }
+    });
+    routes[1].children?.concat(portalChildren)
+    setMyRouter(createHashRouter(generateRouter(routes)))
+  }
+  return <RouterProvider router={myRouter}></RouterProvider>;
+ 
+})
 export{ Router,RouterLoader}

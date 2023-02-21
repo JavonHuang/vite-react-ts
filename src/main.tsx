@@ -20,7 +20,7 @@ RouterBeforeEach(( to,from) => {
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-     <RouterProvider router={Router()}/>
+      <Router></Router>
     </PersistGate>
     {/* <Counter></Counter> */}
     {/* <AliveScope>

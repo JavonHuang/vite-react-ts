@@ -16,7 +16,7 @@ const Home=()=> {
     
     <button className="home">
       主页
-      {detail.name}
+      {/* {detail.name} */}
     </button>
   </div>
 }

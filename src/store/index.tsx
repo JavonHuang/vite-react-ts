@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage'
 
 import counterReducer from './slice'
 import customerReducer from './slice/customer'
-
+import systemReducer from './slice/system'
 
 const persistConfig = {
   key: 'root',
@@ -22,7 +22,8 @@ export const store = configureStore({
   },
   reducer: {
     num: counterReducer,
-    customer:persistedReducer,
+    customer: persistedReducer,
+    system:systemReducer,
   },
 })
 
