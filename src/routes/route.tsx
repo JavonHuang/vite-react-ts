@@ -95,7 +95,6 @@ const RouterLoader = (fun: IRouterBeforeLoad) => {
 const Router = memo(() => { 
   let [myRouter, setMyRouter] = useState(createHashRouter(generateRouter([...routes])));
   const routerList = useAppSelector((state) => state.system.routerList)
-  const dispatch = useAppDispatch()
   useEffect(() => { 
     init()
   }, [routerList])
@@ -108,14 +107,14 @@ const Router = memo(() => {
       let index = routerList.findIndex((r: any) => r.url == key);
       if (index>-1) { 
         portalChildren.push({
-          path: key.replace('.tsx','').replace('/src/page','/Portal'),
+          path:routerList[index]["path"],
           auth: false,
           name:key.replace('.tsx','').replace('/src/page',''),
           component:lazy((modules[key] as any))
         });
       }
     });
-    routes[1].children?.concat(portalChildren)
+    routes[1].children=routes[1].children?.concat(portalChildren)
     setMyRouter(createHashRouter(generateRouter(routes)))
   }
   return <RouterProvider router={myRouter}></RouterProvider>;

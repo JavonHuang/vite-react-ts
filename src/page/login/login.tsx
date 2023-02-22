@@ -1,4 +1,5 @@
-import './login.module.scss'
+
+import styles from "./login.module.scss";
 import { useNavigate,useLocation } from "react-router-dom";
 import { useUtilsNavigate } from "@/utils/useUtilsNavigate";
 import { GetRouter } from '@/store/slice/system'
@@ -18,7 +19,7 @@ function Login() {
   }
   
 
-  return <div className="login">
+  return <div className={styles.login}>
     <button className="login-btn" onClick={handleClick}>登录</button>
   </div>
 }

@@ -4,6 +4,7 @@ import { post } from "@/request";
 export interface ISystem {
   isLogin: Boolean,
   routerList: Array<any>,
+  isLoadRouter:Boolean,
 }
 
 
@@ -13,18 +14,24 @@ export const GetRouter =createAsyncThunk<
 Array<any>
 >(
   "num/GetPosts", async (userId, thunkApi) => { 
-    const response = await post(`/router/list`,userId)
-    return response.data as Array<any>;
+    let globalState: any = thunkApi.getState();
+    if (!globalState["system"]["isLoadRouter"]) {
+      const response = await post(`/router/list`, userId)
+      return response.data as Array<any>;
+    } else { 
+      return Promise.resolve(globalState["system"]["routerList"]);
+    }
   }
 );
   
 const initialState:ISystem = {
   isLogin: false,
   routerList: [],
+  isLoadRouter:false,
 }
 
 export const systemSlice = createSlice({
-  name: 'num',
+  name: 'system',
   initialState,
   reducers: {
     setIsLogin(state,action: PayloadAction<Boolean>) { 
@@ -33,7 +40,10 @@ export const systemSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(GetRouter.fulfilled, (state, { payload }) => {
-      state.routerList =payload;
+      if (JSON.stringify(state.routerList)!=JSON.stringify(payload)) { 
+        state.routerList = payload;
+        state.isLoadRouter = true;
+      }
     })
     builder.addCase(GetRouter.rejected, (state, { payload }) => {
       state.routerList =[];

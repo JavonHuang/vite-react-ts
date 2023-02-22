@@ -1,12 +1,9 @@
+import "./main.scss";
 import ReactDOM from 'react-dom';
-import {RouterProvider } from "react-router-dom";
 import { Router } from './routes/route';
-import { AliveScope } from 'react-activation'
-import React from 'react';
 import { RouterBeforeEach } from "@/utils/useUtilsNavigate";
 import { store,persistor } from './store'
 import { Provider } from 'react-redux'
-
 import { PersistGate } from 'redux-persist/integration/react'
 
 
