@@ -1,9 +1,10 @@
 
-import styles from "./login.module.scss";
+import "./login.scss";
 import { useNavigate,useLocation } from "react-router-dom";
 import { useUtilsNavigate } from "@/utils/useUtilsNavigate";
 import { GetRouter } from '@/store/slice/system'
 import {  useAppDispatch } from '@/hooks/useReduxHook';
+import { Button } from 'antd';
 function Login() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -19,8 +20,12 @@ function Login() {
   }
   
 
-  return <div className={styles.login}>
-    <button className="login-btn" onClick={handleClick}>登录</button>
+  return <div className={"login"}>
+    <div className={ "main"}>
+      <div>
+      <Button className="login-btn" onClick={handleClick}>登录</Button>
+      </div>
+    </div>
   </div>
 }
 export default Login
